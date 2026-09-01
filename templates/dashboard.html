@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | HeartWise</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            ❤️ HeartWise
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="{{ url_for('logout') }}">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= DASHBOARD ================= -->
+
+    <main class="container dashboard">
+
+
+        <!-- ================= HEADER ================= -->
+
+        <div class="dashboard-header">
+
+            <h1>
+                Welcome back, {{ name }}! ❤️
+            </h1>
+
+            <p>
+                Let's take another step towards a healthier heart today.
+            </p>
+
+        </div>
+
+
+
+        <!-- ================= PROFILE ================= -->
+
+        <div class="dashboard-card profile-dashboard-card">
+
+            {% if profile %}
+
+            <h3>
+                👤 My Profile
+            </h3>
+
+            <p>
+                Your HeartWise profile is complete. Your dietary
+                preference can now be used to personalize your
+                food recommendations.
+            </p>
+
+            <div class="profile-status">
+                ✓ Profile Complete
+            </div>
+
+            <a href="{{ url_for('profile') }}" class="button">
+
+                View / Update Profile
+
+            </a>
+
+            {% else %}
+
+            <h3>
+                👤 Complete Your HeartWise Profile 💚
+            </h3>
+
+            <p>
+                Add your age, height, weight, activity level,
+                and dietary preference so HeartWise can
+                personalize your experience.
+            </p>
+
+            <div class="profile-status profile-incomplete">
+                ! Profile Not Completed
+            </div>
+
+            <a href="{{ url_for('profile') }}" class="button">
+
+                Complete Profile
+
+            </a>
+
+            {% endif %}
+
+        </div>
+
+
+
+        <!-- ================= RECOMMENDED FOODS ================= -->
+
+        <div class="dashboard-card recommended-dashboard-card">
+
+            <div class="dashboard-card-header">
+
+                <div>
+
+                    <h3>
+                        🥗 Recommended Foods
+                    </h3>
+
+                    {% if profile %}
+
+                    <p>
+                        Heart-healthy foods selected for your dietary preference.
+                    </p>
+
+                    <span class="dashboard-diet-label">
+                        Diet: {{ profile.dietary_preference|lower }}
+                    </span>
+
+                    {% else %}
+
+                    <p>
+                        Explore heart-friendly foods selected
+                        for a healthy eating pattern.
+                    </p>
+
+                    {% endif %}
+
+                </div>
+
+
+                {% if recommended_foods %}
+
+                <div class="dashboard-food-grid">
+
+                    {% for food in recommended_foods %}
+
+                    <div class="dashboard-food-card">
+
+                        <div class="dashboard-food-icon">
+                            {{ food_emojis.get(food.food_name, "🥗") }}
+                        </div>
+
+                        <h4>
+                            {{ food.food_name }}
+                        </h4>
+
+                        <span class="dashboard-food-category">
+                            {{ food.category }}
+                        </span>
+
+                        <div class="dashboard-food-nutrition">
+
+                            <span>
+                                💪 {{ food.protein }}g protein
+                            </span>
+
+                            <span>
+                                🌿 {{ food.fiber }}g fiber
+                            </span>
+
+                        </div>
+
+                        <a href="{{ url_for('food_detail', food_id=food.id) }}" class="dashboard-food-link">
+
+                            View Details →
+
+                        </a>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <a href="{{ url_for('foods') }}" class="button">
+
+                Explore All Healthy Foods →
+
+            </a>
+
+            {% else %}
+
+            <div class="empty-dashboard-message">
+
+                <p>
+                    Complete your profile to receive
+                    personalized food recommendations.
+                </p>
+
+                <a href="{{ url_for('profile') }}" class="button">
+
+                    Complete Profile
+
+                </a>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+
+
+        <!-- ================= DAILY MEAL PLAN ================= -->
+        <div class="dashboard-card meal-plan-dashboard-card">
+
+            <h3>
+                🍽️ Daily Meal Plan
+            </h3>
+
+            {% if profile %}
+
+            <p>
+                Today's personalized meal plan for you 💚
+            </p>
+
+            <a href="{{ url_for('meal_plan') }}" class="button">
+                View Today's Meal Plan →
+            </a>
+
+            {% else %}
+
+            <p>
+                Complete your profile to receive a personalized
+                daily meal plan.
+            </p>
+
+            <a href="{{ url_for('profile') }}" class="button">
+                Complete Profile
+            </a>
+
+            {% endif %}
+
+        </div>
+
+
+
+
+        <!-- ================= HEARTWISE JOURNEY ================= -->
+
+        <div class="dashboard-journey">
+
+            <h2>
+                ❤️ Your HeartWise Journey
+            </h2>
+
+            <div class="journey-grid">
+
+                <div class="journey-item">
+
+                    <span>
+                        🥗
+                    </span>
+
+                    <strong>
+                        60+
+                    </strong>
+
+                    <small>
+                        Heart-Healthy Foods
+                    </small>
+
+                </div>
+
+
+                <div class="journey-item">
+
+                    <span>
+                        🍽️
+                    </span>
+
+                    <strong>
+                        150+
+                    </strong>
+
+                    <small>
+                        Healthy Recipes
+                    </small>
+
+                </div>
+
+
+                <div class="journey-item">
+
+                    <span>
+                        💚
+                    </span>
+
+                    <strong>
+                        Personalized
+                    </strong>
+
+                    <small>
+                        Recommendations
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </main>
+
+
+</body>
+
+</html>

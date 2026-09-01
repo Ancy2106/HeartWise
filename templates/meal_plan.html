@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Daily Meal Plan | HeartWise</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+    <nav class="navbar">
+
+        <div class="logo">
+            ❤️ HeartWise
+        </div>
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('dashboard') }}">
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('foods') }}">
+                Healthy Foods
+            </a>
+
+            <a href="{{ url_for('logout') }}">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <main class="meal-plan-page">
+
+
+        <a href="{{ url_for('dashboard') }}" class="back-link">
+
+            ← Back to Dashboard
+
+        </a>
+
+
+        <div class="meal-plan-header">
+
+            <span class="section-label">
+                🍽️ HEARTWISE DAILY PLAN
+            </span>
+
+            <h1>
+                Today's Personalized Meal Plan 💚
+            </h1>
+
+            <p>
+                Personalized meals based on your profile
+                and dietary preference.
+            </p>
+
+            {% if profile %}
+
+            <span class="meal-plan-diet">
+
+                Diet:
+                {{ profile.dietary_preference }}
+
+            </span>
+
+            {% endif %}
+
+        </div>
+
+
+
+        <div class="meal-list">
+
+
+            <!-- BREAKFAST -->
+
+            {% if breakfast %}
+
+            <div class="meal-card">
+
+                <div class="meal-card-header">
+
+                    <span class="meal-icon">
+                        🌅
+                    </span>
+
+                    <div>
+
+                        <span class="meal-type">
+                            Breakfast
+                        </span>
+
+                        <h2>
+                            {{ breakfast.recipe_name }}
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <p class="meal-description">
+                    {{ breakfast.description }}
+                </p>
+
+                <p class="meal-ingredients">
+                    🥗
+                    {{ breakfast.ingredients.replace('\n', ' • ') }}
+                </p>
+
+
+                <div class="meal-meta">
+
+                    {% if breakfast.preparation_time %}
+
+                    <span>
+                        ⏱️ {{ breakfast.preparation_time }} min
+                    </span>
+
+                    {% endif %}
+
+                    {% if breakfast.difficulty %}
+
+                    <span>
+                        📊 {{ breakfast.difficulty }}
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <a href="{{ url_for('recipe_detail', recipe_id=breakfast.id) }}" class="meal-recipe-link">
+
+                    View Recipe →
+
+                </a>
+
+            </div>
+
+            {% endif %}
+
+
+
+            <!-- LUNCH -->
+
+            {% if lunch %}
+
+            <div class="meal-card">
+
+                <div class="meal-card-header">
+
+                    <span class="meal-icon">
+                        ☀️
+                    </span>
+
+                    <div>
+
+                        <span class="meal-type">
+                            Lunch
+                        </span>
+
+                        <h2>
+                            {{ lunch.recipe_name }}
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <p class="meal-description">
+                    {{ lunch.description }}
+                </p>
+
+                <p class="meal-ingredients">
+                    🥗
+                    {{ lunch.ingredients.replace('\n', ' • ') }}
+                </p>
+
+
+                <div class="meal-meta">
+
+                    {% if lunch.preparation_time %}
+
+                    <span>
+                        ⏱️ {{ lunch.preparation_time }} min
+                    </span>
+
+                    {% endif %}
+
+                    {% if lunch.difficulty %}
+
+                    <span>
+                        📊 {{ lunch.difficulty }}
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <a href="{{ url_for('recipe_detail', recipe_id=lunch.id) }}" class="meal-recipe-link">
+
+                    View Recipe →
+
+                </a>
+
+            </div>
+
+            {% endif %}
+
+
+
+            <!-- SNACK -->
+
+            {% if snack %}
+
+            <div class="meal-card">
+
+                <div class="meal-card-header">
+
+                    <span class="meal-icon">
+                        🍎
+                    </span>
+
+                    <div>
+
+                        <span class="meal-type">
+                            Snack
+                        </span>
+
+                        <h2>
+                            {{ snack.recipe_name }}
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <p class="meal-description">
+                    {{ snack.description }}
+                </p>
+
+                <p class="meal-ingredients">
+                    🥗
+                    {{ snack.ingredients.replace('\n', ' • ') }}
+                </p>
+
+
+                <div class="meal-meta">
+
+                    {% if snack.preparation_time %}
+
+                    <span>
+                        ⏱️ {{ snack.preparation_time }} min
+                    </span>
+
+                    {% endif %}
+
+                    {% if snack.difficulty %}
+
+                    <span>
+                        📊 {{ snack.difficulty }}
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <a href="{{ url_for('recipe_detail', recipe_id=snack.id) }}" class="meal-recipe-link">
+
+                    View Recipe →
+
+                </a>
+
+            </div>
+
+            {% endif %}
+
+
+
+            <!-- DINNER -->
+
+            {% if dinner %}
+
+            <div class="meal-card">
+
+                <div class="meal-card-header">
+
+                    <span class="meal-icon">
+                        🌙
+                    </span>
+
+                    <div>
+
+                        <span class="meal-type">
+                            Dinner
+                        </span>
+
+                        <h2>
+                            {{ dinner.recipe_name }}
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <p class="meal-description">
+                    {{ dinner.description }}
+                </p>
+
+                <p class="meal-ingredients">
+                    🥗
+                    {{ dinner.ingredients.replace('\n', ' • ') }}
+                </p>
+
+
+                <div class="meal-meta">
+
+                    {% if dinner.preparation_time %}
+
+                    <span>
+                        ⏱️ {{ dinner.preparation_time }} min
+                    </span>
+
+                    {% endif %}
+
+                    {% if dinner.difficulty %}
+
+                    <span>
+                        📊 {{ dinner.difficulty }}
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <a href="{{ url_for('recipe_detail', recipe_id=dinner.id) }}" class="meal-recipe-link">
+
+                    View Recipe →
+
+                </a>
+
+            </div>
+
+            {% endif %}
+
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

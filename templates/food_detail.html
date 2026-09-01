@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ food.food_name }} | HeartWise</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+
+</head>
+
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            ❤️ HeartWise
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="{{ url_for('dashboard') }}">
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('logout') }}">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <main class="food-detail-page">
+
+
+        <!-- BACK -->
+
+        <a href="{{ url_for('foods') }}" class="back-link">
+
+            ← Back to Healthy Foods
+
+        </a>
+
+
+        <!-- HERO -->
+
+        <section class="food-hero">
+
+            <div class="food-hero-top">
+
+                <div class="food-title">
+
+                    <h1>
+                        {{ food.food_name }}
+                    </h1>
+
+                    <div class="food-badges">
+
+                        <span class="food-badge">
+                            {{ food.category }}
+                        </span>
+
+                        <span class="food-badge diet-badge">
+                            {{ food.dietary_type }}
+                        </span>
+
+                        {% if food.heart_healthy %}
+
+                        <span class="food-badge heart-badge">
+                            ❤️ Heart Healthy
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <div class="food-big-icon">
+                    {{ food_emojis.get(food.food_name, "🥗") }}
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DESCRIPTION -->
+
+        <section class="section-card">
+
+            <h2>About {{ food.food_name }}</h2>
+
+            <p>
+                {{ food.description }}
+            </p>
+
+        </section>
+
+
+        <!-- NUTRITION -->
+
+        <section class="section-card">
+
+            <h2>📊 Nutrition Information</h2>
+
+            <div class="nutrition-grid">
+
+
+                <div class="nutrition-box">
+
+                    <div class="value">
+                        {{ food.calories }}
+                    </div>
+
+                    <div class="label">
+                        Calories (kcal)
+                    </div>
+
+                </div>
+
+
+                <div class="nutrition-box">
+
+                    <div class="value">
+                        {{ food.protein }}g
+                    </div>
+
+                    <div class="label">
+                        Protein
+                    </div>
+
+                </div>
+
+
+                <div class="nutrition-box">
+
+                    <div class="value">
+                        {{ food.fiber }}g
+                    </div>
+
+                    <div class="label">
+                        Fiber
+                    </div>
+
+                </div>
+
+
+                <div class="nutrition-box">
+
+                    <div class="value">
+                        {{ food.saturated_fat }}g
+                    </div>
+
+                    <div class="label">
+                        Saturated Fat
+                    </div>
+
+                </div>
+
+
+                <div class="nutrition-box">
+
+                    <div class="value">
+                        {{ food.sodium }}mg
+                    </div>
+
+                    <div class="label">
+                        Sodium
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- INGREDIENTS -->
+
+        <section class="section-card">
+
+            <h2>🧾 Ingredients</h2>
+
+            <p>
+                {{ food.ingredients }}
+            </p>
+
+        </section>
+
+
+        <!-- HEALTH BENEFITS -->
+
+        <section class="section-card">
+
+            <h2>💚 Health Benefits</h2>
+
+            <p style="white-space: pre-line;">
+                {{ food.health_benefits }}
+            </p>
+
+        </section>
+
+
+        <!-- HEARTWISE REASON -->
+
+        <section class="section-card">
+
+            <div class="heartwise-box">
+
+                <h3>
+                    ❤️ Why HeartWise Recommends {{ food.food_name }}
+                </h3>
+
+                <p>
+                    {{ food.heartwise_reason }}
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- RECIPES -->
+
+        <section class="section-card">
+
+            <h2>
+                🍽️ Healthy Recipes
+            </h2>
+
+            {% if recipes %}
+
+            {% for recipe in recipes %}
+
+            <div class="recipe-card">
+
+                <h3>
+                    {{ recipe.recipe_name }}
+                </h3>
+
+                <p>
+                    {{ recipe.description }}
+                </p>
+
+                <div class="recipe-meta">
+
+                    {% if recipe.preparation_time %}
+
+                    <span>
+                        ⏱️ {{ recipe.preparation_time }} min
+                    </span>
+
+                    {% endif %}
+
+                    {% if recipe.difficulty %}
+
+                    <span>
+                        📊 {{ recipe.difficulty }}
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <h4>
+                    Ingredients
+                </h4>
+
+                <p>
+                    {{ recipe.ingredients }}
+                </p>
+
+
+                <h4>
+                    Instructions
+                </h4>
+
+                <p>
+                    {{ recipe.instructions }}
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+            {% else %}
+
+            <div class="no-recipes">
+
+                🥗 Simple healthy recipes for this food
+                will be added soon.
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+
+    </main>
+
+</body>
+
+</html>
