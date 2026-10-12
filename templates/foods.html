@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>HeartWise Foods</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            ❤️ HeartWise
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/dashboard">Dashboard</a>
+
+            <a href="/profile">Profile</a>
+
+            <a href="/logout">Logout</a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="container foods-page">
+
+        <div class="foods-header">
+
+            <span class="section-label">
+                ❤️ HEARTWISE COLLECTION
+            </span>
+
+            <h1>Heart-Healthy Foods</h1>
+
+            <p>
+                Explore heart-conscious foods selected to match your
+                dietary preference and support a healthier lifestyle.
+                Discover their nutrition, benefits, and healthy recipes.
+            </p>
+
+            <div class="personalized-food-message">
+                ❤️ Showing foods suitable for your
+                <strong>{{ dietary_preference }}</strong> diet
+            </div>
+
+        </div>
+
+        <!-- ================= FOOD FILTERS ================= -->
+
+        <div class="food-filters">
+
+            <form method="GET" action="{{ url_for('foods') }}" class="food-search-form">
+
+                <div class="search-box">
+
+                    <span>🔎</span>
+
+                    <input type="text" name="search" placeholder="Search foods..." value="{{ search }}">
+
+                </div>
+
+                <button type="submit" class="search-button">
+                    Search
+                </button>
+
+                {% if search or selected_category %}
+                <a href="{{ url_for('foods') }}" class="clear-button">
+                    Clear
+                </a>
+                {% endif %}
+
+            </form>
+
+
+            <!-- CATEGORY FILTERS -->
+
+            <div class="category-filters">
+
+                <a href="{{ url_for('foods', search=search) }}"
+                    class="category-filter {% if not selected_category %}active{% endif %}">
+                    All
+                </a>
+
+                {% for category in [
+                "Fruits",
+                "Vegetables",
+                "Grains",
+                "Legumes",
+                "Nuts",
+                "Seeds",
+                "Dairy",
+                "Protein",
+                "Fish",
+                "Seafood"
+                ] %}
+
+                <a href="{{ url_for('foods', category=category, search=search) }}"
+                    class="category-filter {% if selected_category == category %}active{% endif %}">
+                    {{ category }}
+                </a>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        <div class="food-results-info">
+
+            {% if foods %}
+            Showing <strong>{{ foods|length }}</strong>
+            {% if foods|length == 1 %}food{% else %}foods{% endif %}
+
+            {% if search %}
+            matching "<strong>{{ search }}</strong>"
+            {% endif %}
+
+            {% if selected_category %}
+            in <strong>{{ selected_category }}</strong>
+            {% endif %}
+
+            {% else %}
+            No foods found.
+            {% endif %}
+
+        </div>
+
+
+        <!-- ================= FOOD GRID ================= -->
+
+        <div class="food-grid">
+
+            {% if foods %}
+
+            {% for food in foods %}
+
+            <div class="food-card">
+
+
+                <!-- FOOD ICON -->
+
+                <div class="food-icon">
+                    {{ food_emojis.get(food.food_name, "🥗") }}
+                </div>
+
+
+                <!-- FOOD NAME -->
+
+                <h2>
+                    {{ food.food_name }}
+                </h2>
+
+
+                <!-- CATEGORY + DIET -->
+
+                <div class="food-tags">
+
+                    <span class="food-category">
+                        {{ food.category }}
+                    </span>
+
+                    <span class="diet-tag {{ food.dietary_type|lower|replace('-', '') }}">
+                        {{ food.dietary_type }}
+                    </span>
+
+                </div>
+
+
+                <!-- NUTRITION -->
+
+                <div class="nutrition-grid">
+
+                    <div class="nutrition-item">
+
+                        <span class="nutrition-icon">
+                            🔥
+                        </span>
+
+                        <div>
+                            <small>Calories</small>
+                            <strong>
+                                {{ food.calories }} kcal
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="nutrition-item">
+
+                        <span class="nutrition-icon">
+                            💪
+                        </span>
+
+                        <div>
+                            <small>Protein</small>
+                            <strong>
+                                {{ food.protein }} g
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="nutrition-item">
+
+                        <span class="nutrition-icon">
+                            🌿
+                        </span>
+
+                        <div>
+                            <small>Fiber</small>
+                            <strong>
+                                {{ food.fiber }} g
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="nutrition-item">
+
+                        <span class="nutrition-icon">
+                            🧂
+                        </span>
+
+                        <div>
+                            <small>Sodium</small>
+                            <strong>
+                                {{ food.sodium }} mg
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- HEARTWISE BADGE -->
+
+                {% if food.heart_healthy %}
+
+                <div class="heartwise-badge">
+                    ❤️ HeartWise Choice
+                </div>
+
+                {% endif %}
+
+
+                <!-- DETAILS BUTTON -->
+
+                <a href="{{ url_for('food_detail', food_id=food.id) }}" class="food-details-button">
+                    View Food Details
+                    <span>→</span>
+                </a>
+
+            </div>
+
+            {% endfor %}
+
+            {% else %}
+
+            <div class="no-foods">
+
+                <div class="no-foods-icon">
+                    🔎
+                </div>
+
+                <h2>No foods found</h2>
+
+                <p>
+                    We couldn't find a heart-healthy food
+                    matching your search or filter.
+                </p>
+
+                <a href="{{ url_for('foods') }}" class="button">
+                    View All Foods
+                </a>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

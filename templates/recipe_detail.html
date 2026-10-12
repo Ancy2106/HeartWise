@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ recipe.recipe_name }} | HeartWise</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            ❤️ HeartWise
+        </div>
+
+        <div class="nav-links">
+
+            <a href="{{ url_for('dashboard') }}">
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('foods') }}">
+                Healthy Foods
+            </a>
+
+            <a href="{{ url_for('meal_plan') }}">
+                Meal Plan
+            </a>
+
+            <a href="{{ url_for('logout') }}">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= RECIPE PAGE ================= -->
+
+    <main class="recipe-detail-page">
+
+        <a href="{{ url_for('meal_plan') }}" class="back-link">
+
+            ← Back to Meal Plan
+
+        </a>
+
+
+        <!-- ================= RECIPE HERO ================= -->
+
+        <section class="recipe-detail-hero">
+
+            <span class="recipe-detail-label">
+                🍽️ HEARTWISE RECIPE
+            </span>
+
+            <h1>
+                {{ recipe.recipe_name }}
+            </h1>
+
+            <p class="recipe-detail-description">
+
+                {{ recipe.description }}
+
+            </p>
+
+
+            <div class="recipe-detail-meta">
+
+                {% if recipe.meal_type %}
+
+                <span>
+                    🍽️ {{ recipe.meal_type }}
+                </span>
+
+                {% endif %}
+
+
+                {% if recipe.preparation_time %}
+
+                <span>
+                    ⏱️ {{ recipe.preparation_time }} min
+                </span>
+
+                {% endif %}
+
+
+                {% if recipe.difficulty %}
+
+                <span>
+                    📊 {{ recipe.difficulty }}
+                </span>
+
+                {% endif %}
+
+
+                {% if recipe.food_name %}
+
+                <span>
+                    🥗 {{ recipe.food_name }}
+                </span>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= INGREDIENTS ================= -->
+
+        <section class="recipe-detail-card">
+
+            <h2>
+                🥗 Ingredients
+            </h2>
+
+            <div class="recipe-text">
+
+                {{ recipe.ingredients }}
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= INSTRUCTIONS ================= -->
+
+        <section class="recipe-detail-card">
+
+            <h2>
+                👨‍🍳 Instructions
+            </h2>
+
+            <div class="recipe-text">
+
+                {{ recipe.instructions }}
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= HEARTWISE TIP ================= -->
+
+        <section class="recipe-heartwise-tip">
+
+            <h2>
+                ❤️ HeartWise Tip
+            </h2>
+
+            <p>
+
+                This recipe is included as part of HeartWise's
+                heart-conscious meal recommendations. Enjoy it
+                as part of a balanced eating pattern with plenty
+                of vegetables, fruits, whole grains, legumes,
+                nuts, and seeds.
+
+            </p>
+
+        </section>
+
+
+
+        <!-- ================= BOTTOM ACTIONS ================= -->
+
+        <div class="recipe-detail-actions">
+
+            <a href="{{ url_for('meal_plan') }}" class="button">
+
+                ← Back to Today's Meal Plan
+
+            </a>
+
+            <a href="{{ url_for('foods') }}" class="button">
+
+                Explore Healthy Foods →
+
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

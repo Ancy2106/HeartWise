@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile | HeartWise</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            ❤️ HeartWise
+        </div>
+
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/logout">Logout</a>
+        </div>
+
+    </nav>
+
+    <div class="form-page">
+
+        <div class="form-container profile-form">
+
+            <h2>👤 My Profile</h2>
+
+            {% if not profile_exists %}
+
+            <div class="profile-intro complete-profile-message">
+
+                <h3>💚 Complete Your HeartWise Profile</h3>
+
+                <p>
+                    Add your age, height, weight, activity level, and dietary
+                    preference so HeartWise can personalize your experience.
+                </p>
+
+            </div>
+
+            {% else %}
+
+            <div class="profile-intro">
+
+                <p>
+                    Keep your information up to date to receive more relevant
+                    HeartWise recommendations.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+
+            {% if message %}
+
+            <div class="profile-message success">
+                {{ message }}
+            </div>
+
+            {% endif %}
+
+
+            {% if error %}
+
+            <div class="profile-message error">
+                {{ error }}
+            </div>
+
+            {% endif %}
+
+            <form method="POST">
+
+                <label>Age</label>
+
+                <input type="number" name="age" min="1" value="{{ profile.age if profile else '' }}" required>
+
+                <label>Gender</label>
+
+                <select name="gender" required>
+
+                    <option value="">Select Gender</option>
+
+                    <option value="Male" {% if profile and profile.gender=='Male' %} selected {% endif %}>
+                        Male
+                    </option>
+
+                    <option value="Female" {% if profile and profile.gender=='Female' %} selected {% endif %}>
+                        Female
+                    </option>
+
+                    <option value="Other" {% if profile and profile.gender=='Other' %} selected {% endif %}>
+                        Other
+                    </option>
+
+                </select>
+
+                <label>Height (cm)</label>
+
+                <input type="number" step="0.01" name="height" value="{{ profile.height if profile else '' }}" required>
+
+                <label>Weight (kg)</label>
+
+                <input type="number" step="0.01" name="weight" value="{{ profile.weight if profile else '' }}" required>
+
+                <label>Activity Level</label>
+
+                <select name="activity_level" required>
+
+                    <option value="">Select Activity Level</option>
+
+                    <option value="Low" {% if profile and profile.activity_level=='Low' %} selected {% endif %}>
+                        Low
+                    </option>
+
+                    <option value="Moderate" {% if profile and profile.activity_level=='Moderate' %} selected {% endif
+                        %}>
+                        Moderate
+                    </option>
+
+                    <option value="High" {% if profile and profile.activity_level=='High' %} selected {% endif %}>
+                        High
+                    </option>
+
+                </select>
+
+                <label>Dietary Preference</label>
+
+                <select name="dietary_preference" required>
+
+                    <option value="">Select Preference</option>
+
+                    <option value="Vegetarian" {% if profile and profile.dietary_preference=='Vegetarian' %} selected {%
+                        endif %}>
+                        Vegetarian
+                    </option>
+
+                    <option value="Non-Vegetarian" {% if profile and profile.dietary_preference=='Non-Vegetarian' %}
+                        selected {% endif %}>
+                        Non-Vegetarian
+                    </option>
+
+                    <option value="Vegan" {% if profile and profile.dietary_preference=='Vegan' %} selected {% endif %}>
+                        Vegan
+                    </option>
+
+                </select>
+
+                <button type="submit">
+                    Save Profile
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
